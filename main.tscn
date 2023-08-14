@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=3 uid="uid://ck8dubo3jq2v7"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_s34xt"]
+[ext_resource type="Texture2D" uid="uid://c61pj0rk8cwce" path="res://blobber.svg" id="3_8i54u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0qddg"]
+size = Vector2(2614, 4)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_30b1v"]
+radius = 39.0
+height = 138.0
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_s34xt")
+
+[node name="WindowPolygon" type="Polygon2D" parent="."]
+visible = false
+color = Color(1, 1, 1, 0.788235)
+polygon = PackedVector2Array(-145, -96, -59, -88, -62, -12, -138, -11)
+
+[node name="Ground" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+shape = SubResource("RectangleShape2D_0qddg")
+
+[node name="Blobber" type="RigidBody2D" parent="."]
+
+[node name="BlobberSprite" type="Sprite2D" parent="Blobber"]
+scale = Vector2(0.176674, 0.176674)
+texture = ExtResource("3_8i54u")
+
+[node name="ZamnLabel" type="Label" parent="Blobber/BlobberSprite"]
+visible = false
+offset_left = -781.1
+offset_top = -362.249
+offset_right = -324.1
+offset_bottom = -146.249
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 176
+text = "zamn!"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Blobber"]
+position = Vector2(1, -1)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_30b1v")
+
+[node name="ZamnCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="ZamnOnScreen" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[connection signal="timeout" from="ZamnCooldown" to="." method="_on_zamn_cooldown_timeout"]
+[connection signal="timeout" from="ZamnOnScreen" to="." method="_on_zamn_on_screen_timeout"]
